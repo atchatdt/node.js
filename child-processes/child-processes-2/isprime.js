@@ -1,7 +1,7 @@
   
 process.on("message", message => {
-    
     const jsonResponse = isPrime(message.number);
+    jsonResponse.id = process.pid
     process.send(jsonResponse);
     process.exit();
 })

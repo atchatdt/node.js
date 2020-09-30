@@ -3,8 +3,6 @@ const {
     fork
 } = require('child_process');
 
-
-
 app.get("/", (req, res) => {
     res.send("ok")
 })
@@ -15,13 +13,24 @@ app.get("/isprime", (req, res) => {
         number
     } = req.query
     number = parseInt(number)
-    const childProcess = fork("./child-processes-2/isprime.js")
+    const childProcess = fork(__dirname + "/isprime.js")
+
+    childProcess.on('exit', code => {
+        console.log(`Satatus code ${code}`)
+    })
+    
     childProcess.send({
         number
     })
-    childProcess.on("message", message => res.send(message))
-    // const jsonResponse = isPrime(number)
-    // res.send(jsonResponse)
+    childProcess.on("message", message => {
+        console.log('Code exit: ' + childProcess.exitCode)
+        res.send(message)
+    })
+    childProcess.on('error', err => res.send(err))
+
+    // process.kill(childProcess.pid)
+    // childProcess.kill('')
+
 })
 
 app.listen(3000, () => console.log("Listening on 3000"))

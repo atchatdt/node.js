@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "01": "nodemon ./01/index",
-    "chp": "nodemon ./child-processes-2/index"
+    "chp": "nodemon ./child-processes/child-processes-2/index"
   },
   "author": "",
   "license": "ISC",
